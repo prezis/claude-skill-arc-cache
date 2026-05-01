@@ -1,0 +1,132 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+
+jobs:
+  shellcheck:
+    name: Shell scripts (shellcheck)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run shellcheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          severity: warning
+          scandir: '.'
+          additional_files: 'install.sh'
+          ignore_paths: 'tests/fixtures'
+
+  python-lint:
+    name: Python (ruff)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install ruff
+        run: pip install ruff
+      - name: Lint hook scripts
+        run: ruff check hooks/scripts/
+
+  validate-manifest:
+    name: Plugin manifest schema
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate plugin.json
+        run: |
+          python3 - <<'PY'
+          import json, sys
+          required = {"name", "version", "description", "license"}
+          m = json.loads(open(".claude-plugin/plugin.json").read())
+          missing = required - set(m.keys())
+          assert not missing, f"plugin.json missing fields: {missing}"
+          assert m["version"], "version must be non-empty"
+          print("plugin.json schema OK")
+          PY
+      - name: Validate hooks.json
+        run: |
+          python3 - <<'PY'
+          import json
+          h = json.loads(open("hooks/hooks.json").read())
+          assert "hooks" in h, "hooks.json must have 'hooks' key"
+          for event, entries in h["hooks"].items():
+              assert isinstance(entries, list), f"{event} must be a list"
+              for e in entries:
+                  assert "hooks" in e, f"each {event} entry needs 'hooks'"
+          print("hooks.json schema OK")
+          PY
+      - name: Validate SKILL.md frontmatter
+        run: |
+          python3 - <<'PY'
+          import re, sys
+          src = open("skills/arc-cache/SKILL.md").read()
+          m = re.match(r'^---\n(.*?)\n---', src, re.DOTALL)
+          assert m, "SKILL.md must start with --- frontmatter ---"
+          fm = m.group(1)
+          for required in ("name:", "description:"):
+              assert required in fm, f"SKILL.md missing {required}"
+          print("SKILL.md frontmatter OK")
+          PY
+
+  smoke-test:
+    name: arc-bootstrap smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up minimal arc fixture
+        run: |
+          mkdir -p ~/.claude/state/arcs ~/test-files
+          echo "# example doc 1" > ~/test-files/a.md
+          echo "# example doc 2" > ~/test-files/b.md
+          cat > ~/.claude/state/arcs/smoke.conf <<EOF
+          $HOME/test-files/a.md
+          $HOME/test-files/b.md
+          EOF
+      - name: Run arc-bootstrap.sh
+        run: |
+          bash hooks/scripts/arc-bootstrap.sh smoke > /tmp/out.txt
+          test -s /tmp/out.txt
+          grep -q "## arc-bootstrap: a.md" /tmp/out.txt
+          grep -q "## arc-bootstrap: b.md" /tmp/out.txt
+          grep -q "## arc-bootstrap summary" /tmp/out.txt
+          echo "smoke test PASS"
+      - name: Run cache-rollup.sh on empty data
+        run: |
+          rm -f ~/.claude/state/cache-stats.jsonl
+          bash scripts/cache-rollup.sh 24h | grep -q "no data yet"
+          echo "rollup empty-data test PASS"
+
+  readme-claims:
+    name: README claim verification
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify referenced example files exist
+        run: |
+          set -e
+          # Every (path) referenced in README that ends in .txt|.json|.md must exist
+          python3 - <<'PY'
+          import re, sys, os
+          src = open("README.md").read()
+          # Match markdown links to local paths
+          refs = re.findall(r'\]\(([^)]+\.(txt|json|md|sh|py))\)', src)
+          missing = []
+          for path, _ext in refs:
+              if path.startswith("http"): continue
+              if not os.path.exists(path):
+                  missing.append(path)
+          if missing:
+              print("MISSING referenced files:")
+              for m in missing: print(f"  - {m}")
+              sys.exit(1)
+          print(f"All {len(refs)} referenced files exist")
+          PY

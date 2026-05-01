@@ -1,0 +1,19 @@
+[project]
+name = "claude-skill-arc-cache"
+version = "0.1.0"
+description = "Multi-turn project session bootstrap for Claude Code via prompt cache."
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+extend-exclude = ["tests/fixtures"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]  # line-length is enforced via the formatter
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

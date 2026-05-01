@@ -1,0 +1,13 @@
+{
+  "myproject": [
+    "myproject",
+    "my-project",
+    "the project"
+  ],
+  "demo": [
+    "demo",
+    "example",
+    "test arc"
+  ],
+  "_comment": "Copy this file to ~/.claude/state/arcs/aliases.json and customize per your projects. Each key is an arc slug (must match a .conf file in the same directory). Each value is a list of natural-language phrases that should resolve to that slug."
+}

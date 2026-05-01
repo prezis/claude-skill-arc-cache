@@ -1,0 +1,28 @@
+{
+  "ts": 1777670265.1703734,
+  "session_id": "redacted-example-session-id",
+  "transcript_path": "/redacted/path/to/transcript.jsonl",
+  "assistant_turns": 10,
+  "skipped_lines": 0,
+  "tokens": {
+    "uncached_input": 25,
+    "cache_read": 4506759,
+    "cache_write_5m": 0,
+    "cache_write_1h": 16772,
+    "output": 11696
+  },
+  "cost_usd": {
+    "actual": 2.713624,
+    "uncached_baseline": 22.91018,
+    "saved": 20.196556,
+    "saved_pct": 88.2
+  },
+  "service_tier_seen": [
+    "standard"
+  ],
+  "tier_breakdown": {
+    "1h_share_pct": 100.0,
+    "cache_hit_pct": 100.0
+  },
+  "replay": false
+}

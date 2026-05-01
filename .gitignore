@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+build/
+dist/
+
+# Tooling
+.DS_Store
+*.swp
+*.bak
+*.tmp
+
+# Local-only
+.env
+.envrc

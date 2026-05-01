@@ -1,0 +1,22 @@
+---
+description: "Bootstrap an SMC-engine arc — load project cluster as cache prefix"
+allowed-tools: ["Bash(${HOME}/.claude/state/scripts/arc-bootstrap.sh:*)"]
+---
+
+# /arc-myproject — Example arc bootstrap
+
+Loading the myproject cluster (rename this file to arc-<your-slug>.md) (project files, experiment registry,
+roadmap, lab notebook, latest session handoff). The dump becomes one user
+message → captured as cache prefix → 90% discount on subsequent turns for
+the rest of the arc.
+
+```!
+${HOME}/.claude/state/scripts/arc-bootstrap.sh myproject
+```
+
+Now ground yourself in the loaded context. Note the active phase, latest
+roadmap commitments,, and anything in the most recent session handoff that
+constrains the next move. Then ask the user what to work on.
+
+Arc cache pattern doc: `~/ai/global-graph/patterns/prompt-cache-arc-pattern.md`
+Config: `~/.claude/state/arcs/myproject.conf` — edit to add/remove files

@@ -1,0 +1,46 @@
+## arc-bootstrap: myproject.md (8K) — /home/user/notes/projects/myproject.md
+
+---
+name: myproject — demo project
+description: Synthetic example showing the format of an arc-bootstrap dump. The real cluster includes whatever files you list in ~/.claude/state/arcs/<slug>.conf.
+type: project
+tags: [demo, example]
+status: active
+---
+
+# myproject
+
+This is a demo project file used to show what an arc cluster looks like when
+rendered by `arc-bootstrap.sh`. In your real setup, this would be your own
+project notes — README, architecture doc, recent decisions, session handoff.
+
+## Goal
+Build a thing that does the thing.
+
+## Status
+Phase 2 of 3 in progress. Phase 1 complete (foundation), Phase 2 in progress
+(integration), Phase 3 pending (polish + ship).
+
+## Recent decisions
+- Use approach A over B (see decisions log)
+- Defer optimization X until benchmark Y is real
+- Single owner: me
+
+---
+
+
+## arc-bootstrap: ROADMAP.md (12K) — /home/user/notes/projects/ROADMAP.md
+
+# Roadmap
+
+## Q1
+- [x] Foundation
+- [x] Integration prototype
+- [ ] Real-world testing
+
+## Q2
+- [ ] Polish
+- [ ] Ship v0.1
+- [ ] User feedback loop
+
+[... real cluster continues with each file in the .conf, separated by --- ...]

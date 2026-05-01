@@ -1,0 +1,6 @@
+{
+  "hookSpecificOutput": {
+    "hookEventName": "UserPromptSubmit",
+    "additionalContext": "<arc-auto-trigger source=\"arc-auto-trigger.py\" slug=\"myproject\" reason=\"verb='resume'+kw='myproject'\">\n... [arc cluster content elided for example, ~163KB / ~40k tokens] ...\n</arc-auto-trigger>"
+  }
+}

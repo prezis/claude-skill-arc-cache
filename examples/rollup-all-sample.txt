@@ -1,0 +1,27 @@
+Cache rollup — all time
+----------------------------------------
+Sessions:        35 (0 with warnings, 0 replays excluded)
+Assistant turns: 2942
+Skipped lines:   0 across 0 sessions (any > 0 means look at it)
+
+Tokens (M = millions):
+  uncached:     0.01 M
+  cache read:   793.11 M
+  cache write:  56.53 M (1h: 56.53 M / 5m: 0 M)
+  output:       5.58 M
+
+Cost (USD):
+  actual:        $1101.53
+  if no caching: $4387.87
+  saved:         $3286.33 (74.8%)
+
+Cache health:
+  hit rate:      99.9% (target: > 80%)
+  1h tier share: 100% (target: > 90% in Claude Code 2.1.112+)
+
+Top 5 sessions by saved $:
+  session-A  saved=$725.89  turns=579  hit=100.0%  1h=100.0%
+  session-B  saved=$706.02  turns=572  hit=100.0%  1h=100.0%
+  session-C  saved=$311.08  turns=289  hit=100.0%  1h=100.0%
+  session-D  saved=$300.25  turns=284  hit=100.0%  1h=100.0%
+  session-E  saved=$244.12  turns=290  hit=100.0%  1h=100.0%

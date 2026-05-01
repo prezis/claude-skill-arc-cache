@@ -1,0 +1,11 @@
+[... cluster file dumps continue here ...]
+
+---
+
+
+## arc-bootstrap summary
+Files loaded: 8 (0 skipped: missing/binary/io-error)
+Total bytes:  253K (258511B)
+Est. tokens:  64627  (bytes/4 heuristic)
+Cache strategy: this block = one user message → cached for 1h TTL
+                → subsequent turns at 10% pricing on the cached prefix

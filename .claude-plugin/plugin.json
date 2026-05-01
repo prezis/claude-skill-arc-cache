@@ -1,0 +1,23 @@
+{
+  "name": "claude-skill-arc-cache",
+  "version": "0.1.0",
+  "description": "Multi-turn project session bootstrap for Claude Code. Loads curated file clusters as one user message \u2192 cache prefix \u2192 ~90% input discount on the rest of the arc. Includes telemetry, natural-language triggers, slash commands.",
+  "author": {
+    "name": "prezis",
+    "url": "https://github.com/prezis"
+  },
+  "homepage": "https://github.com/prezis/claude-skill-arc-cache",
+  "repository": "https://github.com/prezis/claude-skill-arc-cache",
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "anthropic",
+    "prompt-caching",
+    "context-engineering",
+    "cost-optimization",
+    "developer-tools",
+    "ai-agents"
+  ],
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json"
+}
